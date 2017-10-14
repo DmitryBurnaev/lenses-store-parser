@@ -1,0 +1,33 @@
+<form method="get">
+    <div class="panel panel-default panel-filter">
+        <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title">
+                <a role="button" data-toggle="collapse"
+                   data-parent="#accordion" href="#filterCollapse{{ collapse_id }}"
+                   aria-expanded="true" aria-controls="filterCollapse{{ collapse_id }}">
+                    Основные фильтры
+                </a>
+            </h4>
+        </div>
+        <div id="filterCollapse{{ collapse_id }}" class="panel-collapse collapse {{ collapse_in|yesno:'in,' }}"
+             role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="id_has_action">Поиск по товарам</label>
+                    {{ form.name }}
+                </div>
+                <div class="form-group">
+                    <label for="id_has_action">Акционный товар</label>
+                    {{ form.has_action }}
+                </div>
+                <div class="form-group">
+                    <label for="id_brand">Бренд</label>
+                    {{ form.brand }}
+                </div>
+                <button type="submit" class="btn btn-primary btn-filter-apply">
+                    Применить фильтры
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

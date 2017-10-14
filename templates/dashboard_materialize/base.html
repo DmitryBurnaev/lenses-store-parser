@@ -1,0 +1,160 @@
+{% load static simple_elements %}
+<!DOCTYPE html>
+<!-- saved from url=(0057) -->
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>Парсинг - {% block title %}lensgo.ru{% endblock %}</title>
+
+    <link rel="icon" href="{% static 'main/img/matrerialize-favicon.ico' %}" sizes="32x32">
+
+    <link href="{% static 'plugins/materialize/css/materialize.min.css' %}" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="{% static 'main/css/dashboard-materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+<body class="loaded">
+
+<!-- START HEADER -->
+<header id="header" class="page-topbar">
+    <!-- start header nav-->
+    <div class="navbar-fixed">
+        <nav class="navbar-color">
+            <div class="nav-wrapper">
+                <ul class="left">
+                    <li>
+                        <h1 class="logo-wrapper">
+                            <a href="http://lensgo.ru"
+                               class="brand-logo darken-1 "> Lensgo.ru </a>
+                        </h1>
+                    </li>
+                </ul>
+                <div class="header-search-wrapper hide-on-med-and-down">
+                    {% material_icon 'search' %}
+                    <form class="navbar-form navbar-right" method="get" action="{% url 'main:product-list' %}">
+                        <input name="name" type="text" class="header-search-input z-depth-2" placeholder="Поиск по товарам..." value="{{ search_query|default:'' }}">
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- end header nav-->
+</header>
+<!-- END HEADER -->
+
+<!-- START MAIN -->
+<div id="main">
+    <!-- START WRAPPER -->
+    <div class="wrapper">
+
+        <!-- START LEFT SIDEBAR NAV-->
+        <aside id="left-sidebar-nav">
+            <ul id="slide-out" class="side-nav fixed leftside-navigation ps-container ps-active-y" style="width: 240px;">
+                <li class="user-details cyan darken-2">
+                    <div class="row">
+                        <div class="col col s8 m8 l8">
+                            <span class="white-text profile-btn" >
+                                {{ user.first_name|default:'Пользователь' }}
+                            </span>
+                            <p class="user-roal">{{ user.is_superuser|yesno:'Администратор,Менеджер' }}</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="bold {{ request.path|eq_string:'/'|yesno:'active,' }}">
+                    <a href="{% url 'main:index' %}" class="waves-effect waves-cyan">
+                        {% material_icon 'view_carousel' %} Главная
+                    </a>
+                </li>
+                <li class="bold {{ request.path|is_sub_string:'products'|yesno:'active,' }}">
+                    <a href="{% url 'main:product-list' type='lenses' %}" class="waves-effect waves-cyan">
+                        {% material_icon 'view_list' %} Список товаров
+                    </a>
+                </li>
+                <li class="bold {{ request.path|is_sub_string:'parsing'|yesno:'active,' }}" >
+                    <a href="{% url 'main:parsing_history' %}" class="waves-effect waves-cyan">
+                        {% material_icon 'file_download' %}  История парсинга
+                    </a>
+                </li>
+                <li class="bold {{ request.path|is_sub_string:'themes'|yesno:'active,' }}">
+                    <a href="{% url 'main:themes' %}" class="waves-effect waves-cyan">
+                        {% material_icon 'color_lens' %} Темы
+                    </a>
+                </li>
+                <li class="li-hover">
+                    <div class="divider"></div>
+                </li>
+            </ul>
+
+            <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only">
+                <i class="large material-icons">menu</i>
+            </a>
+        </aside>
+        <!-- END LEFT SIDEBAR NAV-->
+
+        <!-- //////////////////////////////////////////////////////////////////////////// -->
+
+        <!-- START CONTENT -->
+        <section id="content">
+
+            <!--breadcrumbs start-->
+            <div id="breadcrumbs-wrapper">
+                <!-- Search for small screen -->
+                <div class="header-search-wrapper grey hide-on-large-only">
+                    {% material_icon 'search' %}
+                    <form class="navbar-form navbar-right" method="get" action="{% url 'main:product-list' %}">
+                        <input name="name" type="text" class="header-search-input z-depth-2" placeholder="Поиск по товарам..." value="{{ search_query|default:'' }}">
+                    </form>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col s12 m12 l12">
+                            <h5 class="breadcrumbs-title">{% block page_title %} Главная страница {% endblock %}</h5>
+                            {% block breadcrumbs %}
+                                <ol class="breadcrumbs">
+                                    <li class="active">Главная</li>
+                                </ol>
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--breadcrumbs end-->
+
+
+            <!--start container-->
+            <div class="container">
+                <div class="divider"></div>
+                {% block main_content %} {% endblock %}
+                <!--ui-alert-->
+            </div>
+            <!--end container-->
+
+        </section>
+        <!-- END CONTENT -->
+
+    </div>
+    <!-- END WRAPPER -->
+
+</div>
+<!-- END MAIN -->
+
+
+<!-- ================================================
+Scripts
+================================================ -->
+
+<!-- jQuery Library -->
+<script src="{% static 'plugins/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'plugins/materialize/js/materialize.min.js' %}"></script>
+{#<script type="text/javascript" src="{% static 'plugins/materialize/js/perfect-scrollbar.min.js' %}"></script>#}
+{#<script type="text/javascript" src="{% static 'plugins/materialize/plugins.min.js' %}"></script>#}
+<script src="{% static 'main/js/dashboard-materialize.js' %}"></script>
+<script src="{% static 'main/js/main.js' %}"></script>
+{% block script %}{% endblock %}
+
+
+</body>
+
+</html>

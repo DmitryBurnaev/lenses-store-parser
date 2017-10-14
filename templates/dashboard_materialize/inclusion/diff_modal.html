@@ -1,0 +1,15 @@
+<!-- Modal -->
+<div class="modal" id="diff-modal-id-{{ parsing_result.id }}">
+    <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">
+            Изменения от <b>"{{ parsing_result.date_created|date:'d M Y H:i' }}"</b>
+        </h4>
+    </div>
+    <div class="divider"></div>
+    <div class="modal-content">
+        {% include 'dashboard_materialize/inclusion/diff_content.html' with diff=parsing_result.diff %}
+    </div>
+    <div class="modal-footer">
+        <a  class="btn modal-action modal-close waves-effect waves-light">Закрыть </a>
+    </div>
+</div>

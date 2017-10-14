@@ -1,0 +1,22 @@
+<div class="panel-group" id="accordion" role="tablist" align="true">
+    {% for price_item in product.history_prices.all %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title">
+                <a role="button" data-toggle="collapse"
+                   data-parent="#accordion" href="#price-collapse-{{ forloop.counter0 }}"
+                   aria-expanded="true" aria-controls="price-collapse-{{ forloop.counter0 }}">
+                    {{ price_item.date_created|date:'d M Y H:i' }}
+                </a>
+            </h4>
+        </div>
+        <div id="price-collapse-{{ forloop.counter0 }}" class="panel-collapse collapse {{ forloop.counter0|yesno:',in' }}" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                {% include 'dashboard_materialize/products/price_info.html' with price_item=price_item only %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>

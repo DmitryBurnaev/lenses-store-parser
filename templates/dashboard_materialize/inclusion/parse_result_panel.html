@@ -1,0 +1,54 @@
+{% load simple_elements %}
+<div class="padding-delimetr"></div>
+<div class="card hoverable card-parse-result blue">
+    <div class="card-content card-header white-text">
+        <span class="card-title">Парсинг от <strong>{{ parsing_result.date_created|date:'d M Y H:i' }}</strong></span>
+    </div>
+    <div class="card-content blue lighten-5">
+        <div class="row">
+            <div class="col l5 m12 s12">
+                <p>
+                <button class="history-parse-btn modal-trigger waves-effect waves-light btn" data-target="diff-modal-id-{{ parsing_result.id }}">
+                    Изменения
+                </button>
+                </p>
+
+                <p>
+                <a class="btn history-parse-btn waves-effect waves-light"  href="{% url 'main:parsing_download' parsing_result.id %}">
+                    Скачать файл
+                </a>
+                </p>
+                <div class="divider hide-on-large-only padding-divider"></div>
+            </div>
+
+            <div class="col l7 m12 s12">
+                <table class="table table-statistic striped bordered">
+                    <thead>
+                        <tr >
+                            <th></th>
+                            <th class="center-align">{% material_icon 'language' br=True %} <span class=" hide-on-med-and-down">Всего спарсено </span> </th>
+                            <th class="center-align">{% material_icon 'note_add' br=True %} <span class=" hide-on-med-and-down"> Обновлено товаров </span></th>
+                            <th class="center-align">{% material_icon 'add' br=True %} <span class=" hide-on-med-and-down"> Добавлено товаров </span></th>
+                            <th class="center-align">{% material_icon 'remove' br=True %} <span class=" hide-on-med-and-down">Удалено товаров </span></th>
+                            <th class="center-align">{% material_icon 'euro_symbol' br=True %} <span class=" hide-on-med-and-down">Изменено цен </span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product_type, prod_stat in parsing_result.stat_info.items %}
+                            <tr class="{{ forloop.counter0|divisibleby:2|yesno:'warning,' }}">
+                                <td><strong>{{ product_types|get_by_key:product_type }}</strong></td>
+                                <td class="center-align">{{ prod_stat.parsed }}</td>
+                                <td class="center-align">{{ prod_stat.updated }}</td>
+                                <td class="center-align">{{ prod_stat.new }}</td>
+                                <td class="center-align"> {{ prod_stat.removed }}</td>
+                                <td class="center-align">{{ prod_stat.update_prices }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'dashboard_materialize/inclusion/diff_modal.html' with parsing_result=parsing_result only %}

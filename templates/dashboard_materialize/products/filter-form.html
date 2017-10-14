@@ -1,0 +1,28 @@
+<form method="get" class="products-filter-form ">
+    <ul class="collapsible collapsible-accordion" data-collapsible="expandable">
+          <li class="">
+            <div class="collapsible-header {{ collapse_in|yesno:'active,' }}">
+                Основные фильтры
+                <i class="large material-icons">filter</i>
+
+            </div>
+            <div class="collapsible-body" style="display: none;">
+                <div class="form-group">
+                    <label for="id_has_action">Поиск по товарам</label>
+                    {{ form.name }}
+                </div>
+                <div class="form-group">
+                    <label for="id_has_action">Акционный товар</label>
+                    {{ form.has_action }}
+                </div>
+                <div class="form-group">
+                    <label for="id_brand">Бренд</label>
+                    {{ form.brand }}
+                </div>
+                <button type="submit" class="btn btn-warning btn-filter-apply">
+                    Применить
+                </button>
+            </div>
+          </li>
+    </ul>
+</form>

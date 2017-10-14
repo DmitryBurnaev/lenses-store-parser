@@ -1,0 +1,77 @@
+{% extends 'dashboard_simple/base.html' %}
+{% load static %}
+
+{% block main_content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Детализация товара из раздела {{ product.get_type_display }}
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="thumbnail">
+                        {% if product.image_url %}
+                            <img src="http://lensgo.ru/{{ product.image_url }}">
+                        {% else %}
+                            <img src="{% static 'main/img/shutterstock_91407170.jpg' %}">
+                        {% endif %}
+
+                        <div class="caption">
+                            <h3><strong>{{ product.name }}</strong></h3>
+                            <h4>{{ product.brand|default:'Нет бренда' }}</h4>
+                            <br>
+                            <p>
+                                <a href="{{ product.url }}"
+                                   class="btn btn-primary" role="button"
+                                   target="_blank">
+                                    <i class="glyphicon glyphicon-cloud-upload"></i>&nbsp;
+                                    Посмотреть на сайте
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-lg-6">
+                    {% if product.has_action %}
+                        <div class="alert alert-info" role="alert">Товар является акционным</div>
+                    {% endif %}
+                    {% include 'dashboard_simple/products/price_info.html' with price_item=product.current_price %}
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                          Посмотреть историю цен
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        История цен <b>"{{ product.name }}"</b>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    {% include 'dashboard_simple/products/history_price_panel.html' with product=product %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+
+

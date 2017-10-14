@@ -1,0 +1,48 @@
+{% extends 'dashboard_materialize/base.html' %}
+{% load static %}
+
+{% block title %} Главная {% endblock %}
+{% block content_title %} Главная {% endblock %}
+
+
+{% block breadcrumbs %}
+    <ol class="breadcrumbs">
+        <li class="active">Главная</li>
+    </ol>
+{% endblock %}
+
+{% block main_content %}
+
+
+    <div class="card hoverable index-card-image">
+        <div class="card-image">
+            <img src="{% static 'main/img/sample-1.jpg' %}">
+            <span class="card-title">Данные с сайта www.lensgo.ru</span>
+        </div>
+        <div class="card-content">
+            <blockquote>
+                Интернет — крупнейшая в мире библиотека, только все книги разбросаны по полу.
+                <p class="author">Джон Паулос</p>
+            </blockquote>
+
+            <p class="right-align">
+                <img id="throbber" class="parsing-throbber" style="visibility: hidden; width: 40px" src="{% static 'main/img/throbber_12.gif' %}">
+                <button id="start-button-id" class="btn waves-effect waves-light start-parsing-btn"
+                    {% if process_parsing.in_progress %}
+                        data-parse-in-progress="true"
+                        disabled
+                    {% endif %}
+                >Запустить парсинг</button>
+            </p>
+
+        </div>
+    </div>
+    {% include 'dashboard_materialize/inclusion/parse_result_panel.html' with parsing_result=last_parsing %}
+
+
+{% endblock %}
+
+
+
+
+

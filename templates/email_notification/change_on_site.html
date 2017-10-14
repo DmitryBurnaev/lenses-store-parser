@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    {% if diff.has_content %}
+        <p> Найдены следующие различия </p>
+        {% if diff.brands %}
+
+            {% if diff.brands.new %}
+                <h4>Новые бренды</h4>
+                <ul>
+                    {% for brand in diff.brands.new %}
+                        <li> {{  brand }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if diff.brands.updated %}
+                <h4>Измененные бренды</h4>
+                <ul>
+                    {% for brand in diff.brands.updated %}
+                        <li> {{  brand }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if diff.brands.removed %}
+                <h4>Удаленные бренды</h4>
+                <ul>
+                    {% for brand in diff.brands.removed %}
+                        <li> {{  brand }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+
+        {% endif %}
+
+
+
+
+
+
+
+    {% endif %}
+
+</body>
+</html>

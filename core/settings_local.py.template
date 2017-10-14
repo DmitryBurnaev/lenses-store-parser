@@ -1,0 +1,49 @@
+# -*- coding: utf-8 -*-
+
+DEBUG = True
+
+ADMINS = (
+    # ('Your Name', 'your_email@example.com'),
+)
+
+MANAGERS = ['test@test.com']
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+LOCAL_DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'HOST': 'localhost',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+}
+
+# Hosts/domain names that are valid for this site; required if DEBUG is False
+# See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
+ALLOWED_HOSTS = ['127.0.0.1']
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_HOST = 'smtp1.km-union.ru'
+
+BROKER_URL = "amqp://"
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+DEBUG_INTERNAL_IPS = ('127.0.0.1', )
+
+CELERYBEAT_SCHEDULE = {
+    'global_sync': {
+        # run parsing tasks periodic
+        'task': 'global_sync',
+        'schedule': crontab(hour=5, minute=0),
+    },
+}

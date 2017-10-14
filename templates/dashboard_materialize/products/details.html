@@ -1,0 +1,95 @@
+{% extends 'dashboard_materialize/base.html' %}
+{% load static simple_elements %}
+{% block title %} Детализация товара {% endblock %}
+{% block page_title %}Детализация товара из раздела "{{ product.get_type_display }}"{% endblock %}
+
+
+{% block breadcrumbs %}
+    <ol class="breadcrumbs">
+        <li ><a href="/">Главная</a></li>
+        <li ><a href="{% url 'main:product-list' type=product.type %}">{{ product.get_type_display }}</a></li>
+        <li class="active"> {{ product.name|default:'Безымянный' }} </li>
+    </ol>
+{% endblock %}
+
+
+
+{% block main_content %}
+    <div class="row">
+        <div class="col l5 m12 s12">
+            <div class="card">
+                  <div class="card-image">
+                    {% if product.image_url %}
+                        <img src="http://lensgo.ru/{{ product.image_url }}">
+                    {% else %}
+                        <img src="{% static 'main/img/100570_or.jpg' %}">
+                    {% endif %}
+
+                    <span class="card-title"><strong>{{ product.brand|default:'Нет бренда' }}</strong></span>
+                  </div>
+                  <div class="card-content">
+                    <h5><strong>{{ product.name }}</strong></h5>
+                  </div>
+                  <div class="card-action">
+                    <a href="{{ product.url }}" class="btn btn-warning" role="button" target="_blank">
+                        Посмотреть на сайте
+                    </a>
+                  </div>
+                </div>
+        </div>
+        <div class="col l7 m12 s12">
+            <div class="card">
+                <div class="card-content">
+                    {% if product.has_action %}
+                        <div id="card-alert" class="card blue">
+                            <div class="card-content white-text">
+                                <p>Товар является акционным</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% include 'dashboard_materialize/products/price_info.html' with price_item=product.current_price %}
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn modal-trigger waves-effect waves-light price-show-btn" data-target="price-history">
+                          Посмотреть историю цен
+                    </button>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+    <!-- Modal -->
+
+
+<div class="modal" id="price-history">
+    <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">
+            История цен <b>"{{ product.name }}"</b>
+        </h4>
+    </div>
+    <div class="divider"></div>
+    <div class="modal-content">
+        <ul class="collapsible collapsible-accordion" data-collapsible="expandable">
+            {% for price_item in product.history_prices.all %}
+            <li class="{{ forloop.counter0|yesno:',active' }}">
+                <div class="collapsible-header {{ forloop.counter0|yesno:',active' }}"><i class="mdi-file-cloud-download"></i>{{ forloop.counter0 }} {{ price_item.date_created|date:'d M Y H:i' }}</div>
+                <div class="collapsible-body" >
+                    {% include 'dashboard_materialize/products/price_info.html' with price_item=price_item only %}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <a  class="btn modal-action modal-close waves-effect waves-light">Закрыть </a>
+    </div>
+</div>
+
+{% endblock %}
+
+
+

@@ -1,0 +1,65 @@
+{% extends 'dashboard_simple/base.html' %}
+{% load simple_elements %}
+
+{% block main_content %}
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12 hidden-lg">
+            {% include 'dashboard_simple/products/filter-form.html' with collapse_id=1 collapse_in=False  %}
+        </div>
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <ul class="nav nav-tabs">
+                {% for presentation_type, verbose_name in presentation_types %}
+                    <li role="presentation"
+                        class="{{ current_type|is_sub_string:presentation_type|yesno:'active,' }} text-center">
+                        <a href="{% url 'main:product-list' type=presentation_type %}">
+                            {% icon category=presentation_type %}
+                            <span class="visible-lg">{{ verbose_name }}</span>
+                        </a>
+                    </li>
+                {% endfor %}
+                {% if search_query %}
+                    <li role="presentation" class="text-center active"><a>
+                        {% icon 'search' %} <span class="visible-lg"> Результаты поиска </span>
+                    </a></li>
+                {% endif  %}
+            </ul>
+            <div class="panel panel-default panel-products">
+                <!-- Table -->
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        {% if search_query %}<th>Тип</th>{% endif %}
+                        <th>Наименование</th>
+                        <th class="visible-lg">Бренд</th>
+                        <th class="visible-lg">Цены</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for product in products %}
+                        <tr class="{{ product.has_action|yesno:'success,' }}">
+                            <td width="10%">{{ product.remote_id }}</td>
+                            {% if search_query %}<td width="10%">{{ product.get_type_display }}</td>{% endif %}
+                            <td width="40%"><a href="{% url 'main:product-detail' product.id %}">{{ product.name }}</a></td>
+                            <td class="visible-lg" width="20%">{{ product.brand|default:"-" }}</td>
+                            <td class="visible-lg">
+                                {% for v in product.current_price.value %}
+                                    {{ v.0 }} - {{ v.1 }}р <br>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td>По указанному запросу ничего не найдено</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-3 visible-lg">
+            {% include 'dashboard_simple/products/filter-form.html' with collapse_in=True collapse_id=2   %}
+        </div>
+    </div>
+
+{% endblock %}

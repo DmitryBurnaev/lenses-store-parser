@@ -1,0 +1,8 @@
+{% if items %}
+    <h4>{{ sub_title }}</h4>
+    <ul>
+        {% for product_name in items  %}
+            <li> {{ product_name  }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}

@@ -1,0 +1,31 @@
+{% extends 'dashboard_simple/base.html' %}
+{% load static %}
+
+{% block title %} Главная {% endblock %}
+
+{% block main_content %}
+    <div class="jumbotron jumbotron-index">
+        <h2 class="text-center">Данные с сайта www.lensgo.ru</h2>
+        <blockquote class="blockquote-reverse">
+            <p>Всё что Вы отображаете на своем сайте.. так или иначе - может быть использовано на благо других людей =)</p>
+            <footer>Не знаю кто сказал.. может и никто)</footer>
+        </blockquote>
+
+        <p class="text-right">
+            <img id="throbber" style="display: none; width: 40px" src="{% static 'main/img/throbber_12.gif' %}">
+            <button id="start-button-id" class="btn btn-lg btn-primary"
+                {% if process_parsing.in_progress %}
+                    data-parse-in-progress="true"
+                    disabled
+                {% endif %}
+            >Запустить парсинг</button>
+        </p>
+    </div>
+
+    {% include 'dashboard_simple/inclusion/parse_result_panel.html' with parsing_result=last_parsing %}
+
+{% endblock %}
+
+
+
+

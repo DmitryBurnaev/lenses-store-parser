@@ -1,0 +1,46 @@
+{% extends 'dashboard_simple/base.html' %}
+{% load simple_elements static %}
+
+{% block title %} Настройка профиля {% endblock %}
+{% block page_title %} Настройка профиля {% endblock %}
+
+
+{% block main_content %}
+    <div class="row">
+        <form method="post">
+        {% csrf_token %}
+        {{ form.user }}
+        <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+            {% for template_key, template_name in form.fields.template.choices %}
+                <div class="panel panel-default panel-filter">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse"
+                               data-parent="#accordion" href="#panel-collapse-{{ template_key }}"
+                               aria-expanded="true" aria-controls="panel-collapse-{{ template_key }}">
+                                {{ template_name }}
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="panel-collapse-{{ template_key }}" class="panel-collapse collapse {{ template_key|eq_string:current_template|yesno:'in,' }}"
+                         role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            <div class="thumbnail">
+                                <img src="{% static 'main/img/'|add:template_key|add:'_screen.png' %}" alt="...">
+                                <div class="theme-apply text-center">
+                                {% if template_key == current_template %}
+                                    <strong><em>Текущая тема</em></strong>
+                                {% else %}
+                                    <button type="submit" value="{{ template_key }}" name="template" class="btn btn-primary"> Применить тему </button>
+                                {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        </form>
+    </div>
+
+{% endblock %}

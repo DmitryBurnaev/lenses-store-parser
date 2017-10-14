@@ -1,0 +1,41 @@
+{% extends 'dashboard_materialize/base.html' %}
+{% load simple_elements static %}
+
+{% block title %} выбор темы {% endblock %}
+{% block page_title %} Выбор темы {% endblock %}
+
+
+{% block breadcrumbs %}
+    <ol class="breadcrumbs">
+        <li ><a href="/">Главная</a></li>
+        <li class="active"> Темы </li>
+    </ol>
+{% endblock %}
+
+
+{% block main_content %}
+    <div class="row">
+        <div class="col l6 m12 s12">
+            <form method="post">
+            {% csrf_token %}
+            {{ form.user }}
+            <ul class="collapsible collapsible-accordion" data-collapsible="accordion">
+                {% for template_key, template_name in form.fields.template.choices %}
+                  <li class="">
+                    <div class="collapsible-header {{ template_key|eq_string:current_template|yesno:'active,' }}">{{ template_name }}</div>
+                    <div class="collapsible-body">
+                        <img src="{% static 'main/img/'|add:template_key|add:'_screen.png' %}" style="width: 100%">
+                        {% if template_key == current_template %}
+                            <p>Текущая тема</p>
+                        {% else %}
+                            <button class="btn btn-warning" type="submit" value="{{ template_key }}" name="template" > Применить тему </button>
+                        {% endif %}
+                    </div>
+                  </li>
+                {% endfor %}
+            </ul>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

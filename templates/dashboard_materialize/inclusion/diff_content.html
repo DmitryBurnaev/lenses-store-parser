@@ -1,0 +1,16 @@
+{% if diff.has_content %}
+    {% if diff.brands %}
+        <h2>Изменения в брендах</h2>
+        {% include 'email_notification/brands.html' with brands=diff.brands.new sub_title='Новые бренды' only %}
+        {% include 'email_notification/brands.html' with brands=diff.brands.updated sub_title='Измененные бренды' only %}
+        {% include 'email_notification/brands.html' with brands=diff.brands.removed sub_title='Удаленные бренды' only %}
+        <hr>
+    {% endif %}
+    {% if diff.products_changed %}
+        <h2>Изменения в товарах</h2>
+        {% include 'email_notification/products.html' with product_type=diff.lenses sub_title='Линзы' only %}
+        {% include 'email_notification/products.html' with product_type=diff.drops sub_title='Капли' only %}
+        {% include 'email_notification/products.html' with product_type=diff.solutions sub_title='Растворы' only %}
+        {% include 'email_notification/products.html' with product_type=diff.accessories sub_title='Аксессуары' only %}
+    {% endif %}
+{% endif %}

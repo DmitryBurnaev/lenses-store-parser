@@ -1,0 +1,96 @@
+
+.padding-divider{
+    margin-top: 30px;
+}
+.card-parse-result .card-header{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.card-parse-result .card-content{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.card-parse-result .row{
+    margin-top: 10px;
+}
+
+.table-statistic{
+    border: 1px solid #d4d4d4;
+}
+.table-statistic td{
+    border: 1px solid #d4d4d4;
+}
+
+blockquote .author{
+    color: gray;
+    font-size: 12px;
+}
+
+.index-card-image{
+
+}
+.index-card-image .card-image{
+    max-height: 250px;
+    overflow: hidden;
+}
+.index-card-image .card-content{
+    padding-top: 10px;
+}
+
+
+@media only screen and (max-width: 993px) {
+    .modal {
+        top:2% !important;
+        width: 98%;
+        max-height: 95%;
+    }
+}
+.modal .modal-header{
+    padding:15px;
+}
+.modal .modal-header h4{
+    margin-bottom: 0;
+}
+
+.modal h2{
+    font-size: 20px;
+    font-weight: bold;
+}
+.modal h3{
+    font-size: 18px;
+}
+.modal h4{
+    font-size: 16px;
+}
+.pagination{
+    margin-top: 30px;
+}
+.pagination li.controls{
+    margin-top: -5px;
+}
+
+.products-tabs{
+    height: inherit;
+}
+.products-tabs .tab{
+    height: inherit;
+    line-height: 18px;
+}
+.products-tabs .tab a{
+    padding: 10px;
+}
+
+.collapsible-body{
+    padding: 10px;
+}
+.super-success{
+    background-color: #e1ccec;
+}
+.product-list-container{
+    margin-top: 15px;
+}
+.products-filter-form .dropdown-content.select-dropdown{
+    max-height: 350px;
+    overflow-y: auto;
+}

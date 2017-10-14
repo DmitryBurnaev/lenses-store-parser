@@ -1,0 +1,13 @@
+{% load simple_elements %}
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    {% if diff.has_content %}
+        <h1> Найдены следующие различия </h1>
+        {% include 'dashboard_simple/inclusion/diff_content.html' %}
+    {% else %}
+        <h1> Изменений не обнаружено </h1>
+    {% endif %}
+
+</body>
+</html>

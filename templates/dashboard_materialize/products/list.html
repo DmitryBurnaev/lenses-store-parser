@@ -1,0 +1,87 @@
+{% extends 'dashboard_materialize/base.html' %}
+{% load simple_elements %}
+
+{% block title %} список товаров {% endblock %}
+{% block page_title %} Товары {% endblock %}
+
+
+{% block breadcrumbs %}
+    <ol class="breadcrumbs">
+        <li ><a href="/">Главная</a></li>
+        <li class="active"> Товары </li>
+    </ol>
+{% endblock %}
+
+
+{% block main_content %}
+    <div class="row">
+        <div class="col m12 s12 l3 hide-on-large-only">
+            {% include 'dashboard_materialize/products/filter-form.html' with collapse_id=1 collapse_in=False  %}
+        </div>
+        <div class="col l9 m12 s12">
+            <div class="card hoverable card-product-list ">
+                <div class="card-content">
+                    <div class="row">
+                        <div class="col s12">
+                            <ul class="tabs tab-demo-active z-depth-1 cyan products-tabs"
+                                style="width: 100%;">
+                                {% for presentation_type, verbose_name in presentation_types %}
+                                    <li class="tab col s3" onclick="location.href = '{% url 'main:product-list' type=presentation_type %}'">
+                                        <a class="white-text waves-effect waves-light {{ current_type|is_sub_string:presentation_type|yesno:'active,' }} " href="#">
+                                            {% material_icon category=presentation_type br=True %}
+                                            <span class="hide-on-med-and-down">{{ verbose_name }}</span>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                                {% if search_query %}
+                                    <li class="tab col s3">
+                                        <a class="white-text waves-effect waves-light active">
+                                            {% material_icon 'search' %} <span class="hide-on-med-and-down"> Поиск </span>
+                                        </a>
+                                    </li>
+                                {% endif  %}
+
+                            </ul>
+                        </div>
+                        <div class="col s12 product-list-container" style="display: block;">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th >#</th>
+                                    {% if search_query %}<th>Тип</th>{% endif %}
+                                    <th>Наименование</th>
+                                    <th class="hide-on-med-and-down" >Бренд</th>
+                                    <th >Цены</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for product in products %}
+                                    <tr class="{{ product.has_action|yesno:'cyan lighten-4,' }}">
+                                        <td width="10%">{{ product.remote_id }}</td>
+                                        {% if search_query %}<td width="10%">{{ product.get_type_display }}</td>{% endif %}
+                                        <td width="40%"><a href="{% url 'main:product-detail' product.id %}">{{ product.name }}</a></td>
+                                        <td class="hide-on-med-and-down" width="20%">{{ product.brand|default:"-" }}</td>
+                                        <td >
+                                            {% for v in product.current_price.value %}
+                                                {{ v.0 }} - {{ v.1 }}р <br>
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td>По указанному запросу ничего не найдено</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col l3 hide-on-med-and-down">
+            {% include 'dashboard_materialize/products/filter-form.html' with collapse_in=True collapse_id=2   %}
+        </div>
+    </div>
+
+{% endblock %}

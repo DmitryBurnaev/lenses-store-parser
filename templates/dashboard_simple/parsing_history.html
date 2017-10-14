@@ -1,0 +1,15 @@
+{% extends 'dashboard_simple/base.html' %}
+{% load static simple_elements %}
+{% block title %} Главная {% endblock %}
+
+{% block main_content %}
+
+    {% for parsing_result in parsing_results %}
+        {% include 'dashboard_simple/inclusion/parse_result_panel.html' with parsing_result=parsing_result %}
+    {% endfor %}
+
+    {% include 'dashboard_simple/inclusion/paginator.html' %}
+
+{% endblock %}
+
+

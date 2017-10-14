@@ -1,0 +1,50 @@
+{% load simple_elements %}
+<div class="panel panel-default">
+    <div class="panel-heading">Парсинг от <strong>{{ parsing_result.date_created|date:'d M Y H:i' }}</strong></div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#diff-modal-id-{{ parsing_result.id }}">
+                            Изменения
+                        </button>
+                        <a class="btn btn-success"  href="{% url 'main:parsing_download' parsing_result.id %}">
+                            Скачать файл
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
+
+                <table class="table table-bordered table-statistic">
+                    <thead>
+                        <tr >
+                            <th></th>
+                            <th>{% icon 'import' %} <span class="visible-lg">Всего спарсено </span> </th>
+                            <th>{% icon 'floppy-saved' %} <span class="visible-lg"> Обновлено товаров </span></th>
+                            <th>{% icon 'plus' %} <span class="visible-lg"> Добавлено товаров </span></th>
+                            <th>{% icon 'remove' %} <span class="visible-lg">Удалено товаров </span></th>
+                            <th>{% icon 'tag' %} <span class="visible-lg">Изменено цен </span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product_type, prod_stat in parsing_result.stat_info.items %}
+                            <tr class="{{ forloop.counter0|divisibleby:2|yesno:'warning,' }}">
+                                <td><strong>{{ product_types|get_by_key:product_type }}</strong></td>
+                                <td>{{ prod_stat.parsed }}</td>
+                                <td>{{ prod_stat.updated }}</td>
+                                <td>{{ prod_stat.new }}</td>
+                                <td>{{ prod_stat.removed }}</td>
+                                <td>{{ prod_stat.update_prices }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'dashboard_simple/inclusion/diff_modal.html' with parsing_result=parsing_result only %}

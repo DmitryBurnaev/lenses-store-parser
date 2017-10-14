@@ -1,0 +1,41 @@
+{% if page_obj.has_next or page_obj.has_previous %}
+
+<ul class="pagination">
+
+    {% if page_obj.has_previous %}
+        <li class="waves-effect controls">
+            <a href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                <i class="material-icons">chevron_left</i>
+            </a>
+        </li>
+    {% else %}
+        <li class="disabled controls">
+            <a >
+                <i class="material-icons">chevron_left</i>
+            </a>
+        </li>
+    {% endif %}
+
+    <li class="active blue">
+        <a>
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+        </a>
+    </li>
+
+    {% if page_obj.has_next %}
+        <li class="waves-effect controls">
+            <a href="?page={{ page_obj.next_page_number }}" aria-label="Previous">
+                <i class="material-icons">chevron_right</i>
+            </a>
+        </li>
+    {% else %}
+        <li class="disabled controls">
+            <a >
+                <i class="material-icons">chevron_right</i>
+            </a>
+        </li>
+    {% endif %}
+
+
+</ul>
+{% endif %}

@@ -1,0 +1,22 @@
+{% if product_type.has_content %}
+    <h3>Изменения в товарах "{{ sub_title }}"</h3>
+    {% include 'email_notification/product_item.html' with items=product_type.products.new sub_title='Добавились новые' only %}
+    {% include 'email_notification/product_item.html' with items=product_type.products.updated sub_title='Обновились существующие' only %}
+    {% include 'email_notification/product_item.html' with items=product_type.products.removed sub_title='Удалились из существующих' only %}
+
+    <h4>Обновились цены</h4>
+    <ul>
+        {% for price_product in product_type.prices %}
+            <li>
+                <b>{{ price_product.product_name }}</b>
+                Новое значение:
+                {% for price_value in price_product.new_value %}
+                    {{ price_value.0 }} - {{ price_value.1 }} р.;
+                {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+    <hr>
+
+{% endif %}
+

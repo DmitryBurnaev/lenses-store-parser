@@ -1,0 +1,13 @@
+{% if prices %}
+    <ul>
+        {% for brand in brands %}
+            <li>
+                {% if brand.url %}
+                    <a href="{{ brand.url }}"> {{ brand.name|default:'Нет имени' }}</a>
+                {% else %}
+                    {{ brand.name|default:'Нет имени' }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

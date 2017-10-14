@@ -1,0 +1,16 @@
+    <table class="table bordered1 striped ">
+        <thead>
+            <tr>
+                <th>Количество в упаковке</th>
+                <th>Цена, р</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for price_key, price_value in price_item.value %}
+                <tr class="{{ forloop.counter0|divisibleby:2|yesno:'warning,' }}">
+                    <td class="price-key">{{ price_key }}</td>
+                    <td>{{ price_value }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>

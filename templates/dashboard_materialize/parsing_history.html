@@ -1,0 +1,25 @@
+{% extends 'dashboard_materialize/base.html' %}
+{% load static simple_elements %}
+{% block title %} история парсинга {% endblock %}
+{% block page_title %} История парсинга {% endblock %}
+
+
+{% block breadcrumbs %}
+    <ol class="breadcrumbs">
+        <li ><a href="/">Главная</a> </li>
+        <li class="active">История парсинга</li>
+    </ol>
+{% endblock %}
+
+
+{% block main_content %}
+
+    {% for parsing_result in parsing_results %}
+        {% include 'dashboard_materialize/inclusion/parse_result_panel.html' with parsing_result=parsing_result %}
+    {% endfor %}
+
+    {% include 'dashboard_materialize/inclusion/paginator.html' %}
+
+{% endblock %}
+
+

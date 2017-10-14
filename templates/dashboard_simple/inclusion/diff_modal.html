@@ -1,0 +1,21 @@
+<!-- Modal -->
+<div class="modal fade" id="diff-modal-id-{{ parsing_result.id }}" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Изменения от <b>"{{ parsing_result.date_created|date:'d M Y H:i' }}"</b>
+                </h4>
+            </div>
+            <div class="modal-body">
+                {% include 'dashboard_simple/inclusion/diff_content.html' with diff=parsing_result.diff %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Закрыть </button>
+            </div>
+        </div>
+    </div>
+</div>
