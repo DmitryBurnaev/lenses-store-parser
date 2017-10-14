@@ -1,0 +1,14 @@
+# Basic .gitattributes for a python repo.
+
+# Source files
+# ============
+*.pxd		text
+*.py 		text
+*.py3 		text
+*.pyw 		text
+*.pyx  		text
+
+# ignore static folder
+modules/main/static/main/* linguist-vendored
+modules/main/static/plugins/* linguist-vendored
+
