@@ -283,7 +283,7 @@ def send_notification(diff_dict=None):
         return
 
     diff_by_types = DiffByTypesDict(**diff_dict)
-    subject = 'Изменения на сайте lensgo.ru'
+    subject = 'Изменения на сайте lenses'
     text_message = ''
     html_message = render_to_string(
         'email_notification/base.html', {'diff': diff_by_types}

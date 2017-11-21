@@ -10,7 +10,7 @@ log = logging.getLogger(__name__)
 def system_notification(message):
     log.warning(message)
     send_mail(
-        '[lensgo-parsing] Системное уведомление',
+        '[lenses-parsing] Системное уведомление',
         message,
         settings.DEFAULT_FROM_EMAIL,
         dict(settings.ADMINS).values()
