@@ -1,4 +1,4 @@
-django==1.11.28
+django==2.2.24
 django-debug-toolbar<1.7
 celery<=3.2
 redis==2.10.5
